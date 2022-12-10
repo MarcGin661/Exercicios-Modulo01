@@ -1,7 +1,11 @@
 var numerodigitado = 0
 var soma = 0
+
 while (numerodigitado != -1) {
-  numerodigitado = prompt('soma?')
-  soma += parseInt(numerodigitado)
+  numerodigitado = parseInt(prompt('soma?'))
+  console.log(numerodigitado)
+  if (!isNaN(numerodigitado) && numerodigitado != -1) {
+    soma += numerodigitado
+  }
 }
-alert('soma total é: ' + soma)
+alert('o resultado é: ' + soma)

@@ -1,20 +1,32 @@
 const obterIdadeMedia = async (nome) => {
-  const url = 'https://api.agify.io/?country_id=BR&name=marconi'
+  const url = `https://api.agify.io/?country_id=BR&name=${nome}`
+
+  try {
+    const response = await fetch(url)
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const form = document.getElementById('form')
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
-  const nome = event.target.nome.value
-})
 
-fetch(`https://api.agify.io/?country_id=BR&name=marconi`)
-  .then((res) => res.json())
-  .then((data) => {
-    if (data.age === null) {
-      console.log('Nome não encontrado na base de dados')
-    } else {
-      console.log(`Nome: ${data.name} - Idade Média: ${data.age}`)
-    }
-  })
-  .catch((error) => console.error(error))
+  const resultado = document.getElementById('resultado')
+  resultado.innerText = 'Processando...'
+
+  const nome = event.target.nome.value
+
+  const data = await obterIdadeMedia(nome)
+
+  if (data) {
+    resultado.innerText = data.age
+    return
+  }
+
+  resultado.innerText = 'Falha ao buscar informações.'
+})
